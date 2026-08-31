@@ -8,7 +8,7 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "2026.06.03"
+VERSION = "2026.06.04"
 OUTPUT = ROOT / "dist" / f"navien-navilink-npe2-home-assistant-{VERSION}.zip"
 COMPONENT = ROOT / "custom_components" / "navien_navilink_wh"
 
@@ -23,7 +23,9 @@ def main() -> None:
         and "__pycache__" not in path.parts
         and path.suffix != ".pyc"
     ]
-    files.extend([ROOT / "INSTALL.md", ROOT / "README.md", ROOT / "LICENSE"])
+    files.extend(
+        [ROOT / "INSTALL.md", ROOT / "README.md", ROOT / "CHANGELOG.md", ROOT / "LICENSE"]
+    )
 
     with zipfile.ZipFile(OUTPUT, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for path in files:
