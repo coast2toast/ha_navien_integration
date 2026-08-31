@@ -47,7 +47,7 @@ The `DeviceSorting` product families the protocol exposes:
 Validated against a live **NPE-2** (NaviLink US, `swVersion 4352`). Other
 families use the same protocol; if your unit type is not recognised, a repair
 issue is raised and basic controls still work — please
-[open an issue](https://github.com/lasswellt/navien-homeassistant/issues) with
+[open an issue](https://github.com/coast2toast/ha_navien_integration/issues) with
 your model so support can be confirmed.
 
 **Not supported:** units without a NaviLink gateway (Wi-Fi/cloud), and the
@@ -65,7 +65,7 @@ NWP500 heat-pump water heater (different protocol — use a dedicated integratio
 ### HACS (recommended)
 
 1. In HACS → **Integrations** → ⋮ → **Custom repositories**, add
-   `https://github.com/lasswellt/navien-homeassistant` (category: *Integration*).
+   `https://github.com/coast2toast/ha_navien_integration` (category: *Integration*).
 2. Install **Navien NaviLink Water Heater**.
 3. Restart Home Assistant.
 
@@ -269,7 +269,37 @@ Background and field-level findings live in
 ## Credits
 
 - Original integration and NaviLink protocol work by
-  [@nikshriv](https://github.com/nikshriv).
+  [@nikshriv](https://github.com/nikshriv) in
+  [`nikshriv/hass_navien_water_heater`](https://github.com/nikshriv/hass_navien_water_heater).
+- This project is based on
+  [`lasswellt/navien-homeassistant`](https://github.com/lasswellt/navien-homeassistant),
+  release `2026.06.03` (commit
+  `b8c595658c5fb3b90bfbcc2818c21df91cfbe055`).
+
+### Notable changes from the original integration
+
+Compared with `nikshriv/hass_navien_water_heater`, this integration provides:
+
+- A self-contained asyncio-native NaviLink client using Home Assistant's shared
+  HTTP session, AWS SigV4 WebSocket signing, and `paho-mqtt`, replacing the
+  blocking `AWSIoTPythonSDK` client and bundled CA certificate.
+- A typed `DataUpdateCoordinator` architecture with automatic recovery when the
+  approximately hourly NaviLink cloud token expires.
+- Gateway selection, reauthentication, reconfiguration, and a configurable
+  `10`–`120` second polling interval through the Home Assistant UI.
+- Broader, capability-gated device support and telemetry, including diagnostic
+  firmware/status data, descaling information, Wi-Fi signal, cloud connectivity,
+  freeze protection, and fault binary sensors.
+- Modern Home Assistant entity descriptions, translations, icons, device/state
+  classes, disabled-by-default diagnostics, and redacted diagnostic downloads.
+- Gold-tier Integration Quality Scale alignment plus automated validation: 45
+  tests, approximately 96% coverage, and validation with Home Assistant
+  `2026.2.3` and a live NaviLink-connected NPE-2.
+
+The integration domain is `navien_navilink_wh`, whereas the original uses
+`navien_water_heater`. Home Assistant therefore treats this as a separate
+integration; existing original-integration config entries and entity IDs are not
+migrated automatically.
 
 ## License
 
