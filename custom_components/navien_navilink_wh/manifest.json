@@ -11,5 +11,5 @@
   "loggers": ["custom_components.navien_navilink_wh", "paho"],
   "quality_scale": "gold",
   "requirements": ["paho-mqtt>=1.6.1"],
-  "version": "2026.06.04"
+  "version": "2026.08.30"
 }

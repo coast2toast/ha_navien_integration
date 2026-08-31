@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## 2026.06.04
+## 2026.08.30
 
 - Added the local HACS brand icon required by current repository validation.
 - Added descriptive GitHub repository topics required by HACS.
